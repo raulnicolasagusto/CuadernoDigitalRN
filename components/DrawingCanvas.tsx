@@ -19,10 +19,9 @@ interface DrawingPath {
 
 interface DrawingCanvasProps {
   isVisible: boolean;
-  onClose: () => void;
 }
 
-export default function DrawingCanvas({ isVisible, onClose }: DrawingCanvasProps) {
+export default function DrawingCanvas({ isVisible }: DrawingCanvasProps) {
   const [paths, setPaths] = useState<DrawingPath[]>([]);
   const [currentPoints, setCurrentPoints] = useState<Point[]>([]);
   const currentPointsRef = useRef<Point[]>([]);
@@ -109,14 +108,6 @@ export default function DrawingCanvas({ isVisible, onClose }: DrawingCanvasProps
 
   return (
     <View style={styles.container}>
-      {/* Close Button */}
-      <TouchableOpacity 
-        style={styles.closeCanvasButton} 
-        onPress={onClose}
-      >
-        <X size={24} color="#FFFFFF" />
-      </TouchableOpacity>
-
       {/* Canvas */}
       <View style={styles.canvasContainer} {...panResponder.panHandlers}>
         <Svg style={styles.svg} width="100%" height="100%">
@@ -245,13 +236,6 @@ export default function DrawingCanvas({ isVisible, onClose }: DrawingCanvasProps
           </View>
         </View>
       )}
-
-      {/* Botón flotante para abrir el menú de opciones si está cerrado */}
-      {!showOptions && (
-        <TouchableOpacity style={styles.fab} onPress={() => setShowOptions(true)}>
-          <Palette size={24} color="#FFFFFF" />
-        </TouchableOpacity>
-      )}
     </View>
   );
 }
@@ -260,23 +244,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
-  },
-  closeCanvasButton: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    zIndex: 10,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(45, 55, 72, 0.9)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
   },
   canvasContainer: {
     flex: 1,
@@ -411,21 +378,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: '#FFFFFF',
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#8B5CF6',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
   },
 }); 
